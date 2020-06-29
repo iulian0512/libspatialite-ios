@@ -20,6 +20,5 @@
 build
 include
 geos
-proj
 spatialite
 sqlite3
