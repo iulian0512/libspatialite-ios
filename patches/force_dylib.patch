@@ -1,0 +1,22 @@
+diff --git a/configure b/configure
+index 7514985..f7437c4 100755
+--- a/configure
++++ b/configure
+@@ -12327,7 +12327,7 @@ darwin* | rhapsody*)
+   soname_spec='${libname}${release}${major}$shared_ext'
+   shlibpath_overrides_runpath=yes
+   shlibpath_var=DYLD_LIBRARY_PATH
+-  shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
++  shrext_cmds='.dylib'
+ 
+   sys_lib_search_path_spec="$sys_lib_search_path_spec /usr/local/lib"
+   sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
+@@ -16165,7 +16165,7 @@ darwin* | rhapsody*)
+   soname_spec='${libname}${release}${major}$shared_ext'
+   shlibpath_overrides_runpath=yes
+   shlibpath_var=DYLD_LIBRARY_PATH
+-  shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
++  shrext_cmds='.dylib'
+ 
+   sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
+   ;;

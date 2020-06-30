@@ -43,19 +43,20 @@ INCLUDEDIR = ${PREFIX}/include
 
 CXX = ${XCODE_DEVELOPER}/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 CC = ${XCODE_DEVELOPER}/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
-CFLAGS = -isysroot ${IOS_SDK} -I${IOS_SDK}/usr/include -arch ${ARCH} -I${INCLUDEDIR} -miphoneos-version-min=7.0 -O3 -fembed-bitcode
-CXXFLAGS = -stdlib=libc++ -std=c++11 -isysroot ${IOS_SDK} -I${IOS_SDK}/usr/include -arch ${ARCH} -I${INCLUDEDIR} -miphoneos-version-min=7.0 -O3 -fembed-bitcode
-LDFLAGS = -stdlib=libc++ -isysroot ${IOS_SDK} -L${LIBDIR} -L${IOS_SDK}/usr/lib -arch ${ARCH} -miphoneos-version-min=7.0
+CFLAGS = -isysroot ${IOS_SDK} -I${IOS_SDK}/usr/include -arch ${ARCH} -I${INCLUDEDIR} -miphoneos-version-min=9.0 -O3 -fembed-bitcode
+CXXFLAGS = -stdlib=libc++ -std=c++11 -isysroot ${IOS_SDK} -I${IOS_SDK}/usr/include -arch ${ARCH} -I${INCLUDEDIR} -miphoneos-version-min=9.0 -O3 -fembed-bitcode
+LDFLAGS = -stdlib=libc++ -isysroot ${IOS_SDK} -L${LIBDIR} -L${IOS_SDK}/usr/lib -arch ${ARCH} -miphoneos-version-min=9.0
+LIBTOOL=${XCODE_DEVELOPER}/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool
 
 arch: ${LIBDIR}/libspatialite.a
 
-${LIBDIR}/libspatialite.a: ${LIBDIR}/libproj.a ${LIBDIR}/libgeos.a ${CURDIR}/spatialite
-	cd spatialite && env \
+${LIBDIR}/libspatialite.a: ${LIBDIR}/libsqlite3.a ${LIBDIR}/libproj.a ${LIBDIR}/libgeos.a ${CURDIR}/spatialite
+	cd spatialite && env LIBTOOL=${LIBTOOL} \
 	CXX=${CXX} \
 	CC=${CC} \
-	CFLAGS="${CFLAGS} -Wno-error=implicit-function-declaration" \
-	CXXFLAGS="${CXXFLAGS} -Wno-error=implicit-function-declaration" \
-	LDFLAGS="${LDFLAGS} -liconv -lgeos -lgeos_c -lc++" ./configure --host=${HOST} --enable-freexl=no --enable-libxml2=no --prefix=${PREFIX} --with-geosconfig=${BINDIR}/geos-config --disable-shared && make clean install-strip
+	CFLAGS="${CFLAGS} -Wno-error=implicit-function-declaration -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H -I${INCLUDEDIR}" \
+	CXXFLAGS="${CXXFLAGS} -Wno-error=implicit-function-declaration -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H -I${INCLUDEDIR}" \
+	LDFLAGS="${LDFLAGS} -liconv -lgeos -lgeos_c -lc++ -L${LIBDIR}" ./configure --host=${HOST} --enable-freexl=no --enable-libxml2=no --prefix=${PREFIX} --with-sysroot=${PREFIX} --with-geosconfig=${BINDIR}/geos-config --enable-static --disable-shared && make clean install-strip
 
 ${CURDIR}/spatialite:
 	curl http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-4.3.0a.tar.gz > spatialite.tar.gz
@@ -66,52 +67,44 @@ ${CURDIR}/spatialite:
 	./change-deployment-target spatialite
 
 ${LIBDIR}/libproj.a: ${CURDIR}/proj
-	cd proj && env \
+	cd proj && git clean -dfx && ./autogen.sh && env \
 	CXX=${CXX} \
 	CC=${CC} \
 	CFLAGS="${CFLAGS}" \
 	CXXFLAGS="${CXXFLAGS}" \
-	LDFLAGS="${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} --disable-shared && make clean install
+	LDFLAGS="${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} --without-curl --disable-tiff --enable-static --disable-shared && make clean install
 
 ${CURDIR}/proj:
-	curl -L http://download.osgeo.org/proj/proj-4.9.3.tar.gz > proj.tar.gz
-	tar -xzf proj.tar.gz
-	rm proj.tar.gz
-	mv proj-4.9.3 proj
-	./change-deployment-target proj
+	git submodule init
+	git submodule update
 
 ${LIBDIR}/libgeos.a: ${CURDIR}/geos
-	cd geos && env \
+	cd geos && git clean -dfx && ./autogen.sh && env \
 	CXX=${CXX} \
 	CC=${CC} \
 	CFLAGS="${CFLAGS}" \
 	CXXFLAGS="${CXXFLAGS}" \
-	LDFLAGS="${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} --disable-shared && make clean install
+	LDFLAGS="${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} --disable-python --enable-static --disable-shared --disable-inline && make clean install
 
 ${CURDIR}/geos:
-	curl http://download.osgeo.org/geos/geos-3.6.1.tar.bz2 > geos.tar.bz2
-	tar -xzf geos.tar.bz2
-	rm geos.tar.bz2
-	mv geos-3.6.1 geos
-	./change-deployment-target geos
+	git submodule init
+	git submodule update
 
 ${LIBDIR}/libsqlite3.a: ${CURDIR}/sqlite3
-	cd sqlite3 && env LIBTOOL=${XCODE_DEVELOPER}/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool \
+	cd sqlite3 && env LIBTOOL=${LIBTOOL} \
 	CXX=${CXX} \
 	CC=${CC} \
-	CFLAGS="${CFLAGS} -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
-	CXXFLAGS="${CXXFLAGS} -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
-	LDFLAGS="-Wl,-arch -Wl,${ARCH} -arch_only ${ARCH} ${LDFLAGS}" \
-	./configure --host=${HOST} --prefix=${PREFIX} --disable-shared \
-	   --enable-dynamic-extensions --enable-static && make clean install-includeHEADERS install-libLTLIBRARIES
+	CFLAGS="${CFLAGS} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
+	CXXFLAGS="${CXXFLAGS} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
+	LDFLAGS="-Wl,-arch -Wl,${ARCH} -arch_only ${ARCH} ${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} \
+	   --enable-dynamic-extensions --disable-readline --disable-editline --disable-tcl --enable-static --disable-shared && make clean lib_install
 
 ${CURDIR}/sqlite3:
-	curl https://www.sqlite.org/2018/sqlite-autoconf-3250200.tar.gz > sqlite3.tar.gz
-	tar xzvf sqlite3.tar.gz
-	rm sqlite3.tar.gz
-	mv sqlite-autoconf-3250200 sqlite3
-	./change-deployment-target sqlite3
-	touch sqlite3
+	git submodule init
+	git submodule update
 
 clean:
-	rm -rf build geos proj spatialite include lib
+	rm -rf build spatialite include lib
+	cd sqlite3 && git clean -dfx && cd ..
+	cd geos && git clean -dfx && cd ..
+	cd proj && git clean -dfx && cd ..
