@@ -103,6 +103,9 @@ ${CURDIR}/sqlite3:
 	git submodule init
 	git submodule update
 
+package:
+	zip -r libspatialite-release.zip lib include
+
 clean:
 	rm -rf build spatialite include lib
 	cd sqlite3 && git clean -dfx && cd ..
