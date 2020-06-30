@@ -1,6 +1,6 @@
 # libspatialite-ios
 
-A Makefile for automatically downloading and compiling [libspatialite](https://www.gaia-gis.it/fossil/libspatialite/index) (including its dependencies [SQLite](http://sqlite.org/index.html), [GEOS](http://trac.osgeo.org/geos/) and [PROJ.4](https://trac.osgeo.org/proj/)) statically for iOS.
+A Makefile for automatically downloading and compiling [libspatialite](https://www.gaia-gis.it/fossil/libspatialite/index) (including its dependencies [SQLite](https://sqlite.org/index.html), [GEOS](https://trac.osgeo.org/geos/) and [PROJ.4](https://trac.osgeo.org/proj/)) statically for iOS.
 
 The resulting library is a "fat" library suitable for multiple architectures. This includes:
 
@@ -19,6 +19,8 @@ Xcode 6 with Command Line Tools installed.
 Simply run
 
 ```
+git submodule init
+git submodule update
 export MACOSX_DEPLOYMENT_TARGET="10.14.1"
 make
 ```
