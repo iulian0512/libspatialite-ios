@@ -111,7 +111,6 @@ package:
 	zip -r libspatialite-release.zip lib include
 
 clean:
-	rm -rf build spatialite include lib
-	cd sqlite3 && git clean -dfx && cd ..
+	rm -rf build spatialite include lib sqlite3
 	cd geos && git clean -dfx && cd ..
 	cd proj && git clean -dfx && cd ..
