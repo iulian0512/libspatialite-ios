@@ -20,3 +20,10 @@
 build
 include
 spatialite
+sqlite3
+
+# release
+*.zip
+
+# cocoapods
+mod_spatialite-4.3.0a
