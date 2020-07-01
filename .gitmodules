@@ -4,6 +4,3 @@
 [submodule "geos"]
 	path = geos
 	url = https://github.com/libgeos/geos.git
-[submodule "sqlite3"]
-	path = sqlite3
-	url = https://github.com/sqlite/sqlite.git

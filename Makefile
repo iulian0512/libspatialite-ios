@@ -97,11 +97,15 @@ ${LIBDIR}/libsqlite3.a: ${CURDIR}/sqlite3
 	CFLAGS="${CFLAGS} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
 	CXXFLAGS="${CXXFLAGS} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1" \
 	LDFLAGS="-Wl,-arch -Wl,${ARCH} -arch_only ${ARCH} ${LDFLAGS}" ./configure --host=${HOST} --prefix=${PREFIX} \
-	   --enable-dynamic-extensions --disable-readline --disable-editline --disable-tcl --enable-static --disable-shared && make clean lib_install
+	   --enable-dynamic-extensions --enable-static --disable-shared && make clean install-includeHEADERS install-libLTLIBRARIES
 
 ${CURDIR}/sqlite3:
-	git submodule init
-	git submodule update
+	curl https://www.sqlite.org/2020/sqlite-autoconf-3320300.tar.gz > sqlite3.tar.gz
+	tar xzvf sqlite3.tar.gz
+	rm sqlite3.tar.gz
+	mv sqlite-autoconf-3320300 sqlite3
+	./change-deployment-target sqlite3
+	touch sqlite3
 
 package:
 	zip -r libspatialite-release.zip lib include
