@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5365E00524AC829F00D8A6A7 /* include in Resources */ = {isa = PBXBuildFile; fileRef = 5365E00424AC829E00D8A6A7 /* include */; };
 		53CDE30424AADA7B00025A10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CDE30324AADA7B00025A10 /* AppDelegate.m */; };
 		53CDE30724AADA7B00025A10 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CDE30624AADA7B00025A10 /* SceneDelegate.m */; };
 		53CDE30A24AADA7B00025A10 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CDE30924AADA7B00025A10 /* ViewController.m */; };
@@ -17,6 +18,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5365DFFB24AC824400D8A6A7 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5365DFFC24AC825A00D8A6A7 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		5365DFFD24AC826E00D8A6A7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		5365DFFE24AC828800D8A6A7 /* libgeos_c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgeos_c.a; path = ../../lib/libgeos_c.a; sourceTree = "<group>"; };
+		5365DFFF24AC828800D8A6A7 /* mod_spatialite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = mod_spatialite.a; path = ../../lib/mod_spatialite.a; sourceTree = "<group>"; };
+		5365E00024AC828800D8A6A7 /* libproj.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libproj.a; path = ../../lib/libproj.a; sourceTree = "<group>"; };
+		5365E00124AC828800D8A6A7 /* libspatialite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspatialite.a; path = ../../lib/libspatialite.a; sourceTree = "<group>"; };
+		5365E00224AC828800D8A6A7 /* libsqlite3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsqlite3.a; path = ../../lib/libsqlite3.a; sourceTree = "<group>"; };
+		5365E00324AC828800D8A6A7 /* libgeos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgeos.a; path = ../../lib/libgeos.a; sourceTree = "<group>"; };
+		5365E00424AC829E00D8A6A7 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = ../../include; sourceTree = "<group>"; };
 		53CDE2FF24AADA7B00025A10 /* SpatialiteExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpatialiteExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53CDE30224AADA7B00025A10 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53CDE30324AADA7B00025A10 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,11 +53,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5365DFFA24AC824400D8A6A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5365DFFE24AC828800D8A6A7 /* libgeos_c.a */,
+				5365E00324AC828800D8A6A7 /* libgeos.a */,
+				5365E00024AC828800D8A6A7 /* libproj.a */,
+				5365E00124AC828800D8A6A7 /* libspatialite.a */,
+				5365E00224AC828800D8A6A7 /* libsqlite3.a */,
+				5365DFFF24AC828800D8A6A7 /* mod_spatialite.a */,
+				5365DFFD24AC826E00D8A6A7 /* libz.tbd */,
+				5365DFFC24AC825A00D8A6A7 /* libiconv.tbd */,
+				5365DFFB24AC824400D8A6A7 /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		53CDE2F624AADA7B00025A10 = {
 			isa = PBXGroup;
 			children = (
+				5365E00424AC829E00D8A6A7 /* include */,
 				53CDE30124AADA7B00025A10 /* SpatialiteExample */,
 				53CDE30024AADA7B00025A10 /* Products */,
+				5365DFFA24AC824400D8A6A7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,6 +165,7 @@
 				53CDE31224AADA7C00025A10 /* LaunchScreen.storyboard in Resources */,
 				53CDE30F24AADA7C00025A10 /* Assets.xcassets in Resources */,
 				53CDE30D24AADA7B00025A10 /* Main.storyboard in Resources */,
+				5365E00524AC829F00D8A6A7 /* include in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,10 +255,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../lib";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lspatialite",
+					"-lgeos_c",
+					"-lgeos",
+					"-lproj",
+					"-lc++",
+					"-liconv",
+					"-lz",
+				);
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -277,9 +319,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../lib";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lspatialite",
+					"-lgeos_c",
+					"-lgeos",
+					"-lproj",
+					"-lc++",
+					"-liconv",
+					"-lz",
+				);
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
