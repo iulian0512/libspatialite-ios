@@ -108,7 +108,7 @@ ${CURDIR}/sqlite3:
 	touch sqlite3
 
 package:
-	zip -r libspatialite-ios-release.zip lib include
+	zip -r libspatialite-ios-release.zip lib include COPYING
 
 clean:
 	rm -rf build spatialite include lib sqlite3
