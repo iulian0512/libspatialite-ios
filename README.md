@@ -12,7 +12,7 @@ The resulting library is a "fat" library suitable for multiple architectures. Th
 
 ## Requirements
 
-Xcode 6 with Command Line Tools installed.
+Xcode 11 with Command Line Tools installed.
 
 ## Installation
 
@@ -24,3 +24,7 @@ git submodule update
 export MACOSX_DEPLOYMENT_TARGET="10.14.1"
 make
 ```
+
+## Making cocoapods package
+
+TBD
