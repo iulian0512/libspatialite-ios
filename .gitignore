@@ -27,3 +27,6 @@ sqlite3
 
 # cocoapods
 mod_spatialite-4.3.0a
+
+# Xcode
+*.xcuserstate
