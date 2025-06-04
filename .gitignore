@@ -16,16 +16,20 @@
 *.out
 *.app
 
+/.build/
 # Downloaded and built directories
-build
-include
-geos
-proj
-spatialite
-sqlite3
-rttopo
-include
-include
-lib
-icu
+/build/
+/include/
+/geos/
+/proj/
+/spatialite/
+/sqlite3/
+/rttopo/
+/include/
+/include/
+/lib/
+/icu/
 *.xcframework
+.DS_Store
+libspatialite.xcframework.zip
+*.xcuserstate
