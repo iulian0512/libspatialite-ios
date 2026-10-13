@@ -1,10 +1,12 @@
 #!/bin/sh
-    
+
 pushd lib
-libtool -o libspatialiteall.a *.a
+rm -f libspatialiteall.a
+libtool -static -o libspatialiteall.a *.a
 popd
 pushd build/arm64-ios/lib
-libtool -o libspatialiteall.a *.a
+rm -f libspatialiteall.a
+libtool -static -o libspatialiteall.a *.a
 popd
 
 # Make framework

@@ -31,5 +31,5 @@
 /icu/
 *.xcframework
 .DS_Store
-libspatialite.xcframework.zip
+*.xcframework.zip
 *.xcuserstate

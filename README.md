@@ -1,23 +1,25 @@
 libspatialite-ios
 =================
 
-A Makefile for automatically downloading and compiling [libspatialite](https://www.gaia-gis.it/fossil/libspatialite/index) (including its dependencies [SQLite](http://sqlite.org/index.html), [GEOS](http://trac.osgeo.org/geos/) and [PROJ.4](https://trac.osgeo.org/proj/)) statically for iOS.
+A Makefile for automatically downloading and compiling [libspatialite](https://www.gaia-gis.it/fossil/libspatialite/index) (including its dependencies [SQLite](http://sqlite.org/index.html), [GEOS](http://trac.osgeo.org/geos/), [PROJ](https://proj.org), librttopo and ICU) statically for iOS, packed as `libspatialite.xcframework` for the sqflite fork (`iulian0512/sqflite`, `sqflite_darwin`).
 
-The resulting library is a "fat" library suitable for multiple architectures. This includes:
+Versions (set at the top of the Makefile): SQLite 3.54.0 (with `patches/sqlite_3540000_custom.patch`: `remove_accents()`, load extension enabled), spatialite 5.1.0, PROJ 9.9.0, GEOS 3.15.0, librttopo 1.1.0, ICU 78.3. iconv comes from the iOS SDK.
 
-- armv7 (iOS)
-- armv7s (iOS)
-- arm64 (iOS)
-- i386 (iOS Simulator)
+Slices:
+
+- arm64 (iOS device)
+- arm64 (iOS Simulator)
+
+Minimum iOS: `IOS_MIN` in the Makefile (15.5).
 
 Requirements
 ------------
 
-Xcode 6 with Command Line Tools installed.
+Xcode with Command Line Tools, Homebrew `cmake`, `autoconf`, `automake`, `pkg-config`, `gnu-sed` (`gsed`).
 
 Installation
 ------------
 
-Simply run
-
+	make clean
 	make
+	zip -r -y -X libspatialite_<name>.xcframework.zip libspatialite.xcframework -x '*.DS_Store'
